@@ -6,8 +6,8 @@
 #define STEP_SIZE 0.2
 #define SHOOT_BUTTON 12
 #define SHOOT_BUTTON2 9
-#define RIGHT 0
-#define LEFT 1
+#define RIGHT 1
+#define LEFT 0
 
 #define NBR_OF_ENEMIES 6
 

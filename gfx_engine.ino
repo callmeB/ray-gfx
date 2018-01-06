@@ -1,7 +1,5 @@
 #include "gfx_engine.h"
 #include "game.h"
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
 
 void drawLine(int16_t x, int16_t y0, int16_t y1) {
   while (y0>=y1) {

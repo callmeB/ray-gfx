@@ -1,16 +1,27 @@
 #include <Wire.h>
 #include <SPI.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
-#include <TimerOne.h>
+#include <Adafruit_SharpMem.h>
+#include <DueTimer.h>
 #include "game.h"
 #include "gfx_engine.h"
 
 #define D(x) x
 
-#define I2C_ADDRESS 0x3C
-#define OLED_RESET 3 //not used but needed by lib
-Adafruit_SSD1306 display(OLED_RESET);
+#define SHARP_SCK  SCK
+#define SHARP_MOSI MOSI
+#define SHARP_SS   MISO
+
+#define BLACK   0
+#define WHITE   7
+#define RED     1
+#define GREEN   2
+#define BLUE    4
+#define YELLOW  3
+#define MAGENTA 5
+#define CYAN    6
+
+Adafruit_SharpMem display(SHARP_SCK, SHARP_MOSI, SHARP_SS);
+
 
 void timer_IRQ();
 void drawFrame(Enemy *enemy, Player *player);
@@ -24,12 +35,12 @@ void setup() {
   pinMode(SHOOT_BUTTON, INPUT_PULLUP);
   pinMode(SHOOT_BUTTON2, INPUT_PULLUP);
 
-  Timer1.initialize(50000); 
-  Timer1.attachInterrupt(timer_IRQ);
+  Timer3.start(250000);
+  Timer3.attachInterrupt(timer_IRQ);
 
-  display.begin(SSD1306_SWITCHCAPVCC, I2C_ADDRESS);  // initialize with the I2C addr 0x3C (for the 128x64)
+  
+  display.begin();
   display.clearDisplay();
-  display.display(); //init display
 }
 
 void drawFrame(Enemy *enemy, Player *player) {
@@ -41,7 +52,7 @@ void drawFrame(Enemy *enemy, Player *player) {
   if (player->points == NBR_OF_ENEMIES) {
     theEnd();
   }
-  display.display();
+  display.refresh();
 }
 
 void resetEnemys(Enemy *enemy) {

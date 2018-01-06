@@ -1,8 +1,6 @@
 #include "gfx_engine.h"
 #include "game.h"
 #include <avr/pgmspace.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -58,7 +56,7 @@ void disp_player_posistion (Player *player) {
   n = snprintf (buffer, 10, "%d:%d", (int)player->x, (int)player->y);
   n--;
   while(n >= 0){
-    display.drawChar(1+n*6, 56, buffer[n], BLACK, WHITE, 1);
+    display.drawChar(1+n*6, 120, buffer[n], RED, WHITE, 1);
     n--;
   }
 }
@@ -78,7 +76,7 @@ void drawHUD(Player *player) {
   n = snprintf (buffer, 5, "P:%d", (int)player->points);
   n--;
   while(n >= 0){
-    display.drawChar(98+n*6, 56, buffer[n], BLACK, WHITE, 1);
+    display.drawChar(98+n*6, 120, buffer[n], RED, WHITE, 1);
     n--;
   }
 }
@@ -120,13 +118,13 @@ void drawSprite(Player *player, Enemy *enemy) {
         enemy[i].destroyed = 1;
         player->points += 1;
                 display.drawCircle(spriteScreenX, CAMERA_HEIGHT, spriteHeight >> 2, WHITE);
-        display.fillCircle(spriteScreenX, CAMERA_HEIGHT, (spriteHeight >> 2) - 1, BLACK);
+        display.fillCircle(spriteScreenX, CAMERA_HEIGHT, (spriteHeight >> 2) - 1, YELLOW);
         display.fillCircle(spriteScreenX + (spriteHeight >> 3), CAMERA_HEIGHT - (spriteHeight >> 4), spriteHeight >> 4, WHITE);
         display.fillCircle(spriteScreenX - (spriteHeight >> 3), CAMERA_HEIGHT - (spriteHeight >> 4), spriteHeight >> 4, WHITE);
         display.drawLine(spriteScreenX + (spriteHeight >> 4), CAMERA_HEIGHT + (spriteHeight >> 3), spriteScreenX - (spriteHeight >> 4), CAMERA_HEIGHT + (spriteHeight >> 3), WHITE);
       } else {
         display.drawCircle(spriteScreenX, CAMERA_HEIGHT, spriteHeight >> 2, BLACK);
-        display.fillCircle(spriteScreenX, CAMERA_HEIGHT, (spriteHeight >> 2) - 1, WHITE);
+        display.fillCircle(spriteScreenX, CAMERA_HEIGHT, (spriteHeight >> 2) - 1, CYAN);
         display.fillCircle(spriteScreenX + (spriteHeight >> 3), CAMERA_HEIGHT - (spriteHeight >> 4), spriteHeight >> 4, BLACK);
         display.fillCircle(spriteScreenX - (spriteHeight >> 3), CAMERA_HEIGHT - (spriteHeight >> 4), spriteHeight >> 4, BLACK);
         display.drawLine(spriteScreenX + (spriteHeight >> 4), CAMERA_HEIGHT + (spriteHeight >> 3), spriteScreenX - (spriteHeight >> 4), CAMERA_HEIGHT + (spriteHeight >> 3), BLACK);
